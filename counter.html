@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown Timer</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+    }
+    .container {
+        max-width: 300px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+    #timer {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+    button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        margin: 8px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Countdown Timer</h2>
+    <div id="timer">00:00:00</div>
+    <button onclick="startTimer()">Start</button>
+    <button onclick="stopTimer()">Stop</button>
+    <button onclick="resetTimer()">Reset</button>
+</div>
+
+<script>
+    var timer;
+    var timeLeft = 60; // Initial time in seconds
+
+    function startTimer() {
+        if (!timer) {
+            timer = setInterval(function() {
+                var hours = Math.floor(timeLeft / 3600);
+                var minutes = Math.floor((timeLeft % 3600) / 60);
+                var seconds = timeLeft % 60;
+
+                var formattedTime = pad(hours) + ":" + pad(minutes) + ":" + pad(seconds);
+                document.getElementById("timer").innerText = formattedTime;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    timer = null;
+                    alert("Time's up!");
+                } else {
+                    timeLeft--;
+                }
+            }, 1000);
+        }
+    }
+
+    function stopTimer() {
+        clearInterval(timer);
+        timer = null;
+    }
+
+    function resetTimer() {
+        clearInterval(timer);
+        timer = null;
+        timeLeft = 60; // Reset time to initial value
+        document.getElementById("timer").innerText = "00:01:00"; // Update timer display
+    }
+
+    function pad(value) {
+        return value < 10 ? "0" + value : value;
+    }
+</script>
+
+</body>
+</html>
